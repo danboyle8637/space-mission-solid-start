@@ -1,16 +1,19 @@
+import { styled } from "solid-styled-components";
 import { Title } from "solid-start";
+
+import { BrokenHelmet } from "../components/images/BrokenHelmet";
+
+const Logo = styled("div")`
+  width: 300px;
+`;
 
 export default function Home() {
   return (
     <main>
       <Title>Hello Solid Space Mission</Title>
-      <p>
-        Visit{" "}
-        <a href="https://start.solidjs.com" target="_blank">
-          start.solidjs.com
-        </a>{" "}
-        to learn how to build SolidStart apps.
-      </p>
+      <Logo>
+        <BrokenHelmet />
+      </Logo>
     </main>
   );
 }
