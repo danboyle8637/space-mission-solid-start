@@ -4,11 +4,15 @@ import type { Component } from "solid-js";
 
 import { CloseIcon } from "../cssDrawings/CloseIcon";
 import { endpoints } from "../../utils/endpoints";
-import { userStore } from "../../../lib/userStore";
+import { user, updateUser } from "../../../lib/userStore";
 import { MissionId } from "../../types";
-import { networkStore } from "../../../lib/networkStore";
-import { missionStatsStore } from "../../../lib/missionStatsStore";
-import { getErrorMessage } from "../../utils/utilityFunctions";
+import {
+  errorState,
+  updateErrorMessage,
+  toggleErrorOverlay,
+} from "../../../lib/networkStore";
+import { missionStats, resetMissionStats } from "../../../lib/missionStore";
+import { getErrorMessage } from "../../utils/helpers";
 
 interface ButtonProps {
   missionId: MissionId;
@@ -46,19 +50,6 @@ const CancelButton = styled("button")`
 `;
 
 export const CancelMissionButton: Component<ButtonProps> = (props) => {
-  const { userId, setUser, getUserId } = userStore((state) => ({
-    userId: state.userId,
-    setUser: state.setUser,
-    getUserId: state.getUserFromMagic,
-  }));
-
-  const setStatsDoc = missionStatsStore((state) => state.setStatsDoc);
-
-  const { setErrorMessage, toggleErrorToaster } = networkStore((state) => ({
-    setErrorMessage: state.setErrorMessage,
-    toggleErrorToaster: state.toggleErrorToaster,
-  }));
-
   const handleCancelMission = async () => {
     // set loader that says cancelling mission
     console.log("Set a loading state of some sort");
@@ -70,34 +61,30 @@ export const CancelMissionButton: Component<ButtonProps> = (props) => {
     const url = `${baseUrl}/${endpoints.CANCEL_MISSION}`;
 
     const cancelBody = {
-      missionId: missionId,
+      missionId: props.missionId,
     };
 
     try {
-      if (userId === "") {
-        getUserId();
+      if (user().userId === "") {
+        // Use resource to get user... it will either be available or we'll get the user
       }
 
       const cancelRes = await fetch(url, {
         method: "POST",
         headers: {
           "should-update-user-cache": "true",
-          userId: userId,
+          userId: user().userId,
         },
         body: JSON.stringify(cancelBody),
       });
 
       const cancelData = await cancelRes.json();
       const userDoc = cancelData.userDoc;
-      setUser(userDoc);
-      setStatsDoc({
-        isGoal1Complete: false,
-        isGoal2Complete: false,
-        isGoal3Complete: false,
-      });
+      updateUser(userDoc);
+      resetMissionStats();
     } catch (error) {
-      setErrorMessage("Cancel Mission Call", getErrorMessage(error));
-      toggleErrorToaster();
+      updateErrorMessage("Cancel Mission Call", getErrorMessage(error));
+      toggleErrorOverlay();
     }
   };
 
