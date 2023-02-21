@@ -6,7 +6,7 @@ interface ImageProps {
   titleTag: string;
 }
 
-export const MissionCardBanner: Component<ImageProps> = (props) => {
+export const MissionBannerImage: Component<ImageProps> = (props) => {
   return (
     <img
       style={{ width: "100%" }}

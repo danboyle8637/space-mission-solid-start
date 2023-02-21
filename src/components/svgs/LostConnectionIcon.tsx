@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 import type { SVGProps } from "./SpaceMission";
 
-export const LostConnection: Component<SVGProps> = (props) => {
+export const LostConnectionIcon: Component<SVGProps> = (props) => {
   return (
     <svg
       viewBox="0 0 238 30"
