@@ -6,7 +6,11 @@ import { ActionButton } from "../../../buttons/ActionButton";
 import { endpoints } from "../../../../utils/endpoints";
 import { user } from "../../../../../lib/userStore";
 import { missionStats } from "../../../../../lib/missionStore";
-import { errorState } from "../../../../../lib/networkStore";
+import {
+  errorState,
+  updateErrorMessage,
+} from "../../../../../lib/networkStore";
+import {} from "../../../../../lib/portalStore";
 import { getErrorMessage } from "../../../../utils/helpers";
 import { MissionId, UserDoc } from "../../../../types";
 import {
@@ -48,11 +52,11 @@ export const StartMission: Component<StartMissionProps> = (props) => {
       const statsUrl = `${baseUrl}/${endpoints.HANDLE_STATS_DOC}/create-stats-doc`;
 
       const userBody: ActivateMissionUserDocBody = {
-        missionId: missionId,
+        missionId: props.missionId,
       };
 
       const statsBody: ActivateMissionStatsDocBody = {
-        missionId: missionId,
+        missionId: props.missionId,
         goals: {
           isGoal1Complete: false,
           isGoal2Complete: false,
@@ -61,15 +65,15 @@ export const StartMission: Component<StartMissionProps> = (props) => {
       };
 
       try {
-        if (userId === "") {
-          getUserId();
+        if (user().userId === "") {
+          // Go fetch user
         }
 
         const useDocResponse = await fetch(userUrl, {
           method: "POST",
           headers: {
             "should-update-user-cache": "true",
-            userId: userId,
+            userId: user().userId,
           },
           body: JSON.stringify(userBody),
         });
@@ -77,7 +81,7 @@ export const StartMission: Component<StartMissionProps> = (props) => {
         const createStatsDoc = await fetch(statsUrl, {
           method: "POST",
           headers: {
-            userId: userId,
+            userId: user().userId,
           },
           body: JSON.stringify(statsBody),
         });
@@ -95,15 +99,13 @@ export const StartMission: Component<StartMissionProps> = (props) => {
         }
 
         const userDoc: UserDoc = userData.userDoc;
-        setUserDoc(userDoc);
+        // Setting user into state... should not be needed per say
 
         const goals = statsData.statsDoc;
-        setStatsDoc({
-          ...goals,
-        });
+        // Setting stats in state so we can access them
       } catch (error) {
-        setErrorMessage("Start Mission Error", getErrorMessage(error));
-        toggleErrorToaster();
+        updateErrorMessage("Start Mission Error", getErrorMessage(error));
+        // TODO - Need to control an error modal. Need to figure out all the different modals
       }
     };
 

@@ -18,7 +18,7 @@ const Descriptioon = styled("p")`
   text-align: left;
 `;
 
-export const MissionDescription: Component<DescriptionProps> = (props) => {
+export const Description: Component<DescriptionProps> = (props) => {
   return (
     <Container>
       <Descriptioon>{props.description}</Descriptioon>

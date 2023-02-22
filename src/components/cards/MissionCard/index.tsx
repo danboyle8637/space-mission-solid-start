@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createSignal, createMemo } from "solid-js";
 import { Portal } from "solid-js/web";
 import { styled } from "solid-styled-components";
 import type { Component } from "solid-js";
@@ -7,12 +7,16 @@ import { MissionBanner } from "./MissionBanner";
 import { MissionDescription } from "./Description";
 import { Footer } from "./Footer";
 import { MissionDetailsModal } from "../../overlays/MissionDetailsModal";
-import { MissionDetailsCard } from "../../cards/MissionDetailsCard";
-import { useIsHovering } from "../../../hooks/useIsHovering";
-import { userStore } from "../../../../lib/userStore";
+import { MissionDetailsCard } from "../MissionDetailsCard";
+import { user } from "../../../../lib/userStore";
+import {
+  isOverlayOpen,
+  toggleIsOverlayOpen,
+  closeIsOverlayOpen,
+} from "../../../../lib/portalStore";
 import { MissionId } from "../../../types";
 
-interface MissionCardProps {
+interface CardProps {
   missionId: MissionId;
   coverImage: string;
   altTag: string;
@@ -46,29 +50,17 @@ const CardContainer = styled.button`
   }
 `;
 
-export const MissionCard: React.FC<MissionCardProps> = ({
-  missionId,
-  coverImage,
-  altTag,
-  titleTag,
-  headline,
-  description,
-  difficulty,
-}) => {
-  const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
+export const MissionCard: Component<CardProps> = (props) => {
+  const [isHovering, setIsHovering] = createSignal<boolean>(false);
 
-  const activeMission = userStore((state) => state.activeMission);
-
-  const { isHovering, toggleIsHovering } = useIsHovering();
-
-  const isActive = activeMission === missionId;
-
-  const toggleMissionDetails = () => {
-    setIsDetailsOpen((prevValue) => !prevValue);
+  const toggleIsHovering = () => {
+    setIsHovering((prevValue) => !prevValue);
   };
 
-  const closeMissionDetails = () => {
-    setIsDetailsOpen(false);
+  const isActive = createMemo(() => user().activeMission === props.missionId);
+
+  const openCardContainer = () => {
+    console.log("Open the mission details overview");
   };
 
   return (
@@ -78,32 +70,35 @@ export const MissionCard: React.FC<MissionCardProps> = ({
         aria-label="Mission button"
         onMouseOver={toggleIsHovering}
         onMouseLeave={toggleIsHovering}
-        onClick={toggleMissionDetails}
+        onClick={openCardContainer}
       >
-        <BannerImage
-          imageUrl={coverImage}
-          altTag={altTag}
-          titleTag={titleTag}
+        <MissionBanner
+          imageUrl={props.coverImage}
+          altTag={props.altTag}
+          titleTag={props.titleTag}
         />
-        <MissionDescription headline={headline} description={description} />
-        <Footer isActive={isActive} isHovering={isHovering} />
+        <MissionDescription
+          headline={props.headline}
+          description={props.description}
+        />
+        <Footer isActive={isActive()} isHovering={isHovering()} />
       </CardContainer>
       <Portal>
-        <MissionDetailsOverlay
-          isOpen={isDetailsOpen}
-          closeOverlay={closeMissionDetails}
+        <MissionDetailsModal
+          isOpen={isOverlayOpen()}
+          closeOverlay={closeIsOverlayOpen}
         >
           <MissionDetailsCard
-            isOpen={isDetailsOpen}
-            missionId={missionId}
-            imageUrl={coverImage}
-            altTag={altTag}
-            titleTag={titleTag}
-            headline={headline}
-            description={description}
-            isActive={isActive}
+            isOpen={false}
+            missionId={props.missionId}
+            imageUrl={props.coverImage}
+            altTag={props.altTag}
+            titleTag={props.titleTag}
+            headline={props.headline}
+            description={props.description}
+            isActive={isActive()}
           />
-        </MissionDetailsOverlay>
+        </MissionDetailsModal>
       </Portal>
     </>
   );

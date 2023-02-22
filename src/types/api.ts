@@ -1,4 +1,4 @@
-import { MissionId } from "./index";
+import { MissionId, MissionDoc } from "./index";
 
 export interface ActivateMissionUserDocBody {
   missionId: MissionId;
