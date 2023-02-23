@@ -16,14 +16,16 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const Icon = styled(MissionPlaceholderIcon)`
+const Icon = styled("div")`
   width: 14px;
 `;
 
 export const MissionPlaceholder: Component = () => {
   return (
     <Container>
-      <Icon />
+      <Icon>
+        <MissionPlaceholderIcon />
+      </Icon>
     </Container>
   );
 };

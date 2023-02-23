@@ -2,7 +2,7 @@ import { createMemo } from "solid-js";
 import { styled } from "solid-styled-components";
 import type { Component, JSX } from "solid-js";
 
-import { Checkbox } from "./InputComponents/Checkbox";
+import { Checkbox } from "./inputComponents/Checkbox";
 
 interface ButtonProps {
   name: string;

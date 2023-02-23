@@ -61,6 +61,7 @@ export const MissionCard: Component<CardProps> = (props) => {
 
   const openCardContainer = () => {
     console.log("Open the mission details overview");
+    toggleIsOverlayOpen()
   };
 
   return (

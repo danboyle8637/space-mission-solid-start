@@ -14,6 +14,11 @@ const Container = styled.div`
   grid-template-columns: 1fr;
   width: 100%;
   pointer-events: none;
+
+  & img {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 const Divider = styled.div`

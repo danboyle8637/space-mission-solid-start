@@ -32,7 +32,7 @@ const Label = styled("p")`
 
 export const UserIdentityContent: Component = () => {
   const formattedCallSign = createMemo(() =>
-    user().callsign.length > 0 ? capitalizeName(user().callsign) : "Rookie"
+    user().callsign.length > 0 ? capitalizeName(user().callsign) : "Rook"
   );
 
   const dynamicStyles = createMemo(

@@ -12,14 +12,21 @@ const Button = styled.button`
   border: none;
   width: 60px;
   height: 60px;
+  outline: none;
   cursor: pointer;
   box-shadow: 0 0 0 4px hsla(0, 0%, 0%, 0.4);
 `;
 
-// TODO... toggle overlay to update the avatar for the astronaught
+// TODO - toggle overlay to update the avatar for the astronaught
 export const AvatarButton = () => {
+
+  // TODO - Create an image input you can toss in the modal
+  const handleChangeAvatar = () => {
+    console.log("Overly image input and use Cloudflare workers to update image")
+  }
+
   return (
-    <Button aria-label="Avatar Image Button">
+    <Button type="button" aria-label="Avatar Image Button" onClick={handleChangeAvatar}>
       <SpaceMissionHelmet />
     </Button>
   );
