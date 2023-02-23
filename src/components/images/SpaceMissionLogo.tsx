@@ -8,15 +8,21 @@ const Container = styled("div")`
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: min-content;
-  gap: 12px;
+  gap: 20px;
   justify-items: center;
-  width: 100%;
+  width: 224px;
 `;
 
-const MissionHelmet = styled("div")`
+const HelmetContianer = styled("div")`
   position: relative;
+  display: flex;
+  justify-content: center;
   width: 50%;
   isolation: isolate;
+
+  & img {
+    width: 100px;
+  }
 `;
 
 const MissionText = styled("div")`
@@ -61,12 +67,12 @@ const PinkGalaxy = styled("div")`
 export const SpaceMissionLogo: Component = () => {
   return (
     <Container>
-      <MissionHelmet>
+      <HelmetContianer>
         <SpaceMissionHelmet />
         <HelmetShadow />
         <BlueGalaxy />
         <PinkGalaxy />
-      </MissionHelmet>
+      </HelmetContianer>
       <MissionText>
         <SpaceMission />
       </MissionText>

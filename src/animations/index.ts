@@ -83,7 +83,7 @@ export const missionDetailsClosed = (card: HTMLDivElement) => {
 export const loginFormOnLoad = (form: HTMLDivElement) => {
   animate(
     form,
-    { y: 0, scale: 1, opacity: 1 },
+    { y: [-80, 0], scale: [0.9, 1], opacity: [0, 1] },
     { duration: 0.8, easing: "ease-in-out" }
   );
 };
@@ -106,4 +106,8 @@ export const overlayCloseButtonAni = (
   ];
 
   timeline(sequence, { duration: 0.6, delay: 0.8 });
+};
+
+export const textInputActive = (underline: HTMLDivElement) => {
+  animate(underline, { x: ["-100%", 0] }, { duration: 0.6, easing: "linear" });
 };

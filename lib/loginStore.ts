@@ -4,11 +4,10 @@ import { formValidator } from "../src/utils/validators";
 import { emailValidationRules } from "../src/utils/validators/rules";
 import type { InputValue, InputOptions } from "../src/types";
 
-export const [emailAddressValue, setEmailAddressValue] =
-  createSignal<InputValue>({
-    value: "",
-    valid: false,
-  });
+export const [emailAddress, setEmailAddress] = createSignal<InputValue>({
+  value: "",
+  valid: false,
+});
 
 export const [emailAddressOptions, setEmailAddressOptions] =
   createSignal<InputOptions>({
@@ -21,7 +20,7 @@ export const updateEmailAddressValue = (event: InputEvent) => {
   const value = inputElement.value;
   const valid = formValidator(value, emailValidationRules);
 
-  setEmailAddressValue(() => ({
+  setEmailAddress(() => ({
     value: value,
     valid: valid,
   }));

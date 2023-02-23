@@ -1,22 +1,17 @@
-import { createMemo } from "solid-js";
+import { createSignal, onMount, createMemo, createEffect } from "solid-js";
 import { styled } from "solid-styled-components";
 import type { Component, JSX } from "solid-js";
 
-import { SpaceMissionHelmet } from "../../components/images/SpaceMissionHelmet";
-import { TextInput } from "../../components/forms/TextInput";
-import {
-  emailAddressValue,
-  emailAddressOptions,
-  updateEmailAddressValue,
-  updateEmailAddressOptions,
-} from "../../../lib/loginStore";
+import { SpaceMissionLogo } from "../../components/images/SpaceMissionLogo";
+import { LoginForm } from "./LoginForm";
+import { loginFormOnLoad } from "../../animations";
 
 const Container = styled("div")`
   position: relative;
   isolation: isolate;
 `;
 
-const FormContainer = styled("form")`
+const FormContainer = styled("div")`
   padding: 20px;
   display: grid;
   grid-template-columns: 1fr;
@@ -25,15 +20,10 @@ const FormContainer = styled("form")`
   justify-items: center;
   background-color: #0f0f1a;
   border-radius: 20px;
-  width: 375px;
+  width: 100%;
+  max-width: 375px;
   box-shadow: 0 0 0 6px hsla(0, 0%, 0%, 0.4);
-  opacity: 0;
-  transform: translateY(-80px) scale(0.9);
   overflow: hidden;
-`;
-
-const Logo = styled("div")`
-  width: 176px;
 `;
 
 const Galaxy = styled("div")`
@@ -50,6 +40,24 @@ const Galaxy = styled("div")`
 `;
 
 export const LoginView: Component = () => {
+  const [showLoginForm, setShowLoginForm] = createSignal<boolean>(false);
+
+  const toggleShowLoginForm = () => {
+    setShowLoginForm((prevValue) => !prevValue);
+  };
+
+  let loginFormRef: HTMLDivElement;
+
+  onMount(() => {
+    toggleShowLoginForm();
+  });
+
+  createEffect(() => {
+    if (showLoginForm()) {
+      loginFormOnLoad(loginFormRef);
+    }
+  });
+
   const galaxy1Styles = createMemo(
     () =>
       ({
@@ -76,15 +84,9 @@ export const LoginView: Component = () => {
 
   return (
     <Container>
-      <FormContainer>
-        <Logo>
-          <SpaceMissionHelmet />
-        </Logo>
-        <TextInput
-          inputType="email"
-          inputName="emailAddress"
-          labelFor="emailAddress"
-        />
+      <FormContainer ref={loginFormRef!}>
+        <SpaceMissionLogo />
+        <LoginForm />
       </FormContainer>
       <Galaxy style={galaxy1Styles()} />
       <Galaxy style={galaxy2Styles()} />

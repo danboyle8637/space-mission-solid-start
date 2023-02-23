@@ -1,7 +1,8 @@
-import { createMemo } from "solid-js";
+import { createEffect, createMemo } from "solid-js";
 import { styled, useTheme } from "solid-styled-components";
 import type { Component, JSX } from "solid-js";
 
+import { textInputActive } from "../../animations";
 import type { UpdateValueFunction, UpdateOptionsFunction } from "../../types";
 
 interface InputProps {
@@ -25,6 +26,7 @@ const InputContainer = styled("div")`
   grid-template-columns: 1fr;
   grid-template-rows: 1fr min-content;
   gap: 0;
+  border-radius: 8px;
   width: 100%;
   max-width: 500px;
   height: 68px;
@@ -70,16 +72,22 @@ const BaseUnderline = styled("div")`
 const Underline = styled("div")`
   grid-column: 1 / -1;
   grid-row: 1 / -1;
-  background-color: var(--indicator-underline-color);
+  background-color: var(--underline-color);
   width: 100%;
   height: 100%;
-  transform: translateX(-100%);
   transition: background-color 300ms ease-in-out;
   pointer-events: none;
 `;
 
+// TODO - Build out this input for component library
 export const TextInput: Component<InputProps> = (props) => {
   let underlineRef: HTMLDivElement;
+
+  createEffect(() => {
+    if (props.touched) {
+      textInputActive(underlineRef);
+    }
+  });
 
   const styles = createMemo(
     () =>

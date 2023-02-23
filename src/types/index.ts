@@ -20,7 +20,7 @@ export type UpdateValueFunctionWithKeyboard = (
 
 // ********** API Types ********** //
 
-export type MissionId = "mars" | "titan" | "pleiades" | "gargantua" | "x24c89";
+export type MissionId = "mars" | "titan" | "pleiades" | "prodigious" | "x24c89";
 
 export interface MissionDoc {
   missionId: MissionId;
@@ -39,7 +39,7 @@ export interface UserDoc {
   finishedMissions: string[];
   callsign: string;
   avatar: string;
-  missionStatsDocId: string;
+  missionStatsDocId: string | null;
 }
 
 export interface Goals {

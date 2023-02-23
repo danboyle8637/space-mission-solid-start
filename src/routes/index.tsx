@@ -1,19 +1,21 @@
 import { styled } from "solid-styled-components";
 import { Title } from "solid-start";
 
-import { BrokenHelmet } from "../components/images/BrokenHelmet";
+import { LoginView } from "../views/Login";
 
-const Logo = styled("div")`
-  width: 300px;
+const Main = styled("main")`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
 `;
 
 export default function Home() {
   return (
-    <main>
-      <Title>Hello Solid Space Mission</Title>
-      <Logo>
-        <BrokenHelmet />
-      </Logo>
-    </main>
+    <Main>
+      <Title>Space Mission Solid Start and Cloudflare</Title>
+      <LoginView />
+    </Main>
   );
 }
