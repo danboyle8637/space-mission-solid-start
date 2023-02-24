@@ -53,19 +53,8 @@ export const InstantTransition: Component<TransitionProps> = (props) => {
   };
 
   createEffect(() => {
-    if (props.isOpen) {
-      if (window && document && props.isOpen) {
-        const scrollBarWidth = window.innerWidth - document.body.offsetWidth;
-
-        document.body.style.overflow = "hidden";
-        document.body.style.paddingRight = `${scrollBarWidth}`;
-      }
-
-      if (window && document && !props.isOpen) {
-        document.body.style.overflow = "auto";
-        document.body.style.paddingRight = "0";
-      }
-    }
+    console.log(props.isOpen)
+    // toggleScrollingOnOverlay(props.isOpen)
   });
 
   const styles = createMemo(

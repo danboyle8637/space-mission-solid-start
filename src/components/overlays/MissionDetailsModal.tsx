@@ -30,7 +30,6 @@ const Dialog = styled("dialog")`
   border-radius: 20px;
   width: fit-content;
   box-shadow: 0 4px 4px 1px hsla(0, 0%, 0%, 0.4), 0 0 0 4px var(--accent-purple);
-  transform: translate(-50%, -56%);
   z-index: 2;
   overflow: hidden;
 `;
@@ -81,9 +80,9 @@ export const MissionDetailsModal: Component<ModalProps> = (props) => {
 
   return (
     <InstantTransition
-      isOpen={props.isOpen}
-      handleClick={props.closeOverlay}
-      isMobileLayout={false}
+    isOpen={props.isOpen}
+    handleClick={props.closeOverlay}
+    isMobileLayout={false}
     >
       <Dialog ref={modalRef!}>
         <CloseButton

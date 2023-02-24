@@ -59,6 +59,8 @@ export const MissionCard: Component<CardProps> = (props) => {
 
   const isActive = createMemo(() => user().activeMission === props.missionId);
 
+  const isOpen = createMemo(() => isMissionOverlayOpen().isOpen && isMissionOverlayOpen().mission === props.missionId)
+
   const openCardContainer = () => {
     toggleIsMissionOverlayOpen(props.missionId);
   };
@@ -85,17 +87,11 @@ export const MissionCard: Component<CardProps> = (props) => {
       </CardContainer>
       <Portal>
         <MissionDetailsModal
-          isOpen={
-            isMissionOverlayOpen().isOpen &&
-            props.missionId === isMissionOverlayOpen().mission
-          }
+          isOpen={isOpen()}
           closeOverlay={closeIsOverlayOpen}
         >
           <MissionDetailsCard
-            isOpen={
-              isMissionOverlayOpen().isOpen &&
-              props.missionId === isMissionOverlayOpen().mission
-            }
+            isOpen={isOpen()}
             missionId={props.missionId}
             imageUrl={props.coverImage}
             altTag={props.altTag}
