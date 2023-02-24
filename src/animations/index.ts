@@ -96,12 +96,12 @@ export const overlayCloseButtonAni = (
     [
       leftCross,
       { transform: "rotate(-45deg)", opacity: 1 },
-      { duration: 0.3, easing: spring() },
+      { duration: 0.3, easing: "ease-in-out" },
     ],
     [
       rightCross,
       { transform: "rotate(45deg)", opacity: 1 },
-      { duration: 0.3, easing: spring() },
+      { duration: 0.3, easing: "ease-in-out" },
     ],
   ];
 
@@ -110,4 +110,26 @@ export const overlayCloseButtonAni = (
 
 export const textInputActive = (underline: HTMLDivElement) => {
   animate(underline, { x: ["-100%", 0] }, { duration: 0.6, easing: "linear" });
+};
+
+export const modalEnter = (modal: HTMLDialogElement) => {
+  animate(
+    modal,
+    {
+      transform: ["translate(-50%, -56%)", "translate(-50%, -50%)"],
+      opacity: [0, 1],
+    },
+    { duration: 0.3 }
+  );
+};
+
+export const modalExit = (modal: HTMLDialogElement) => {
+  animate(
+    modal,
+    {
+      transform: ["translate(-50%, -50%)", "translate(-50%, -56%)"],
+      opacity: [1, 0],
+    },
+    { duration: 0.3 }
+  );
 };

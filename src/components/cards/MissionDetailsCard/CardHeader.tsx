@@ -27,11 +27,14 @@ const Divider = styled("div")`
 
 const MissionHeadline = styled("h3")`
   position: absolute;
-  bottom: 20px;
+  bottom: 8px;
   left: 20px;
+  padding: 12px 24px;
   font-size: 2.6rem;
   font-weight: 700;
   color: var(--accent-pink);
+  background-color: hsla(0, 0%, 0%, 0.4);
+  border-radius: 12px 12px 0 0;
   z-index: 1;
 `;
 

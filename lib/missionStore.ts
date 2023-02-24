@@ -9,7 +9,7 @@ interface MissionStats {
 
 type CompletedMission = 1 | 2 | 3;
 
-type ActiveMission = {
+interface ActiveMission {
   missionId: MissionId | null;
   coverImage: string;
   altTag: string;
@@ -17,7 +17,7 @@ type ActiveMission = {
   headline: string;
   description: string;
   difficulty: number;
-};
+}
 
 export const [missionList, setMissionList] = createSignal<MissionDoc[]>([]);
 

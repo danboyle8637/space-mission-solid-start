@@ -9,7 +9,12 @@ import {
   emailAddressOptions,
   updateEmailAddressValue,
   updateEmailAddressOptions,
+  resetLoginForm,
 } from "../../../lib/loginStore";
+
+// TODO - DELETE THIS IN PRODUCTION
+import { updateUser } from "../../../lib/userStore";
+import type { UserDoc } from "../../types/index";
 
 const FormContainer = styled("div")`
   display: grid;
@@ -26,15 +31,27 @@ const ButtonContainer = styled("div")`
 
 export const LoginForm: Component = () => {
   const [_, { Form }] = createRouteAction(async (formData: FormData) => {
-    await new Promise((resolve, reject) => setTimeout(resolve, 1000));
     const email = formData.get("emailAddress");
-    console.log(email);
-    if (email === "dan@dan.com") {
-      return redirect("/admin");
-    } else {
-      throw new Error("Invalid username");
+
+    if (email) {
+      const user: UserDoc = {
+        userId: "123456",
+        activeMission: "",
+        callsign: "Maverick",
+        avatar: "",
+        emailAddress: email as string,
+        finishedMissions: [],
+        missionStatsDocId: "",
+      };
+
+      updateUser(user);
     }
-    return redirect("/home");
+
+    if (email === "dan@dan.com") {
+      return redirect("/dashboard");
+    } else {
+      resetLoginForm();
+    }
   });
 
   return (

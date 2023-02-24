@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
 
-import type { UserDoc } from "../src/types";
+import { UserDoc } from "../src/types";
 
 interface UserState {
   userId: string;

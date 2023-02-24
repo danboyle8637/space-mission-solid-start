@@ -1,4 +1,4 @@
-import {} from "solid-js";
+import { createEffect } from "solid-js";
 import { styled } from "solid-styled-components";
 import type { Component } from "solid-js";
 
@@ -28,37 +28,14 @@ export const MissionGoalsForm: Component<GoalsFormProps> = (props) => {
   // Something here
 
   const handleUpdateMissionStats = async (name: string, value: boolean) => {
-    const baseUrl =
-      process.env.NODE_ENV === "development"
-        ? process.env.NEXT_PUBLIC_API_DEV_URL
-        : process.env.NEXT_PUBLIC_API_URL;
-    const url = `${baseUrl}/${endpoints.HANDLE_STATS_DOC}/update-stats-doc`;
-
-    const updateStatsBody = {
-      missionId: props.missionId,
-      goals: {
-        isGoal1Complete:
-          name === "missionGoal1" ? value : missionStats().isGoal1Complete,
-        isGoal2Complete:
-          name === "missionGoal2" ? value : missionStats().isGoal2Complete,
-        isGoal3Complete:
-          name === "missionGoal3" ? value : missionStats().isGoal3Complete,
-      },
-    };
-
-    const statsRes = await fetch(url, {
-      method: "POST",
-      headers: {
-        userId: user().userId,
-      },
-      body: JSON.stringify(updateStatsBody),
-    });
-
-    const statsData = await statsRes.json();
-    updateMissionStats({
-      ...statsData.statsDoc,
-    });
+    console.log("Update the mission stats doc");
   };
+
+  createEffect(() => {
+    console.log(missionStats().isGoal1Complete);
+    console.log(missionStats().isGoal2Complete);
+    console.log(missionStats().isGoal3Complete);
+  });
 
   return (
     <GoalForm>

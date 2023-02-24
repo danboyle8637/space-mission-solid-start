@@ -1,11 +1,27 @@
 import { createSignal } from "solid-js";
+import type { MissionId } from "../src/types";
 
-export const [isOverlayOpen, setIsOverlayOpen] = createSignal<boolean>(false);
+interface MissionOverlay {
+  isOpen: boolean;
+  mission: MissionId;
+}
 
-export const toggleIsOverlayOpen = () => {
-  setIsOverlayOpen((prevValue) => !prevValue);
+export const [isMissionOverlayOpen, setIsMissionOverlayOpen] =
+  createSignal<MissionOverlay>({
+    isOpen: false,
+    mission: "mars",
+  });
+
+export const toggleIsMissionOverlayOpen = (mission: MissionId) => {
+  setIsMissionOverlayOpen((prevValue) => ({
+    isOpen: !prevValue.isOpen,
+    mission: mission,
+  }));
 };
 
 export const closeIsOverlayOpen = () => {
-  setIsOverlayOpen(() => false);
+  setIsMissionOverlayOpen(() => ({
+    isOpen: false,
+    mission: "mars",
+  }));
 };

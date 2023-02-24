@@ -5,8 +5,6 @@ import { checkmarkOn, checkmarkOff } from "../../animations";
 import { SVGProps } from "./SpaceMission";
 
 interface CheckmarkIconProps extends SVGProps {
-  isTextInput: boolean;
-  isTrackingCheck: boolean;
   runAction: boolean;
 }
 
@@ -14,21 +12,11 @@ export const CheckmarkIcon: Component<CheckmarkIconProps> = (props) => {
   let checkRef: SVGPathElement;
 
   createEffect(() => {
-    if (props.isTextInput && props.runAction) {
+    if (props.runAction) {
       checkmarkOn(checkRef);
     }
 
-    if (props.isTextInput && !props.runAction) {
-      checkmarkOff(checkRef);
-    }
-  });
-
-  createEffect(() => {
-    if (props.isTrackingCheck && props.runAction) {
-      checkmarkOn(checkRef);
-    }
-
-    if (props.isTrackingCheck && !props.runAction) {
+    if (!props.runAction) {
       checkmarkOff(checkRef);
     }
   });

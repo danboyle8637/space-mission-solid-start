@@ -39,7 +39,6 @@ export interface UserDoc {
   finishedMissions: string[];
   callsign: string;
   avatar: string;
-  missionStatsDocId: string | null;
 }
 
 export interface Goals {

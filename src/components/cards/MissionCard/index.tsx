@@ -10,8 +10,8 @@ import { MissionDetailsModal } from "../../overlays/MissionDetailsModal";
 import { MissionDetailsCard } from "../MissionDetailsCard";
 import { user } from "../../../../lib/userStore";
 import {
-  isOverlayOpen,
-  toggleIsOverlayOpen,
+  isMissionOverlayOpen,
+  toggleIsMissionOverlayOpen,
   closeIsOverlayOpen,
 } from "../../../../lib/portalStore";
 import { MissionId } from "../../../types";
@@ -60,8 +60,7 @@ export const MissionCard: Component<CardProps> = (props) => {
   const isActive = createMemo(() => user().activeMission === props.missionId);
 
   const openCardContainer = () => {
-    console.log("Open the mission details overview");
-    toggleIsOverlayOpen()
+    toggleIsMissionOverlayOpen(props.missionId);
   };
 
   return (
@@ -86,11 +85,17 @@ export const MissionCard: Component<CardProps> = (props) => {
       </CardContainer>
       <Portal>
         <MissionDetailsModal
-          isOpen={isOverlayOpen()}
+          isOpen={
+            isMissionOverlayOpen().isOpen &&
+            props.missionId === isMissionOverlayOpen().mission
+          }
           closeOverlay={closeIsOverlayOpen}
         >
           <MissionDetailsCard
-            isOpen={false}
+            isOpen={
+              isMissionOverlayOpen().isOpen &&
+              props.missionId === isMissionOverlayOpen().mission
+            }
             missionId={props.missionId}
             imageUrl={props.coverImage}
             altTag={props.altTag}

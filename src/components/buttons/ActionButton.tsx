@@ -26,9 +26,11 @@ const Button = styled("button")`
   cursor: var(--button-cursor);
   transition: box-shadow, background-color, 300ms ease-in-out;
   &:focus {
+    background-color: var(--accent-teal);
     box-shadow: 0 0 0 3px var(--base-blue), 0 0 0 6px var(--accent-teal);
   }
   &:hover {
+    background-color: var(--accent-teal);
     box-shadow: 0 0 0 3px var(--base-blue), 0 0 0 6px var(--accent-teal);
   }
 `;

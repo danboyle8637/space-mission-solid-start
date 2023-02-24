@@ -1,13 +1,10 @@
 import { createSignal, onMount, createMemo, createEffect } from "solid-js";
-import { useNavigate } from '@solidjs/router'
 import { styled } from "solid-styled-components";
 import type { Component, JSX } from "solid-js";
 
 import { SpaceMissionLogo } from "../../components/images/SpaceMissionLogo";
 import { LoginForm } from "./LoginForm";
 import { loginFormOnLoad } from "../../animations";
-
-import { ActionButton } from '../../components/buttons/ActionButton'
 
 const Container = styled("div")`
   position: relative;
@@ -85,18 +82,11 @@ export const LoginView: Component = () => {
       } as JSX.CSSProperties)
   );
 
-  const navigate = useNavigate()
-
-  const handleDashboardClick = () => {
-    navigate("/dashboard")
-  }
-
   return (
     <Container>
       <FormContainer ref={loginFormRef!}>
         <SpaceMissionLogo />
         <LoginForm />
-        <ActionButton isDisabled={false} handleClick={handleDashboardClick}>Go To Dashboard</ActionButton>
       </FormContainer>
       <Galaxy style={galaxy1Styles()} />
       <Galaxy style={galaxy2Styles()} />

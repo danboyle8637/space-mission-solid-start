@@ -32,3 +32,14 @@ export const updateEmailAddressOptions = () => {
     touched: !prevState.touched,
   }));
 };
+
+export const resetLoginForm = () => {
+  setEmailAddress(() => ({
+    value: "",
+    valid: false,
+  }));
+  setEmailAddressOptions(() => ({
+    initial: true,
+    touched: false,
+  }));
+};

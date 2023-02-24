@@ -27,8 +27,8 @@ const ClickLayer = styled("div")`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: hsla(0, 0%, 0%, 0);
-  z-index: 4;
+  background-color: hsla(0, 0%, 0%, 0.3);
+  z-index: 1;
 `;
 
 export const InstantTransition: Component<TransitionProps> = (props) => {
@@ -53,7 +53,19 @@ export const InstantTransition: Component<TransitionProps> = (props) => {
   };
 
   createEffect(() => {
-    toggleScrollingOnOverlay(props.isOpen);
+    if (props.isOpen) {
+      if (window && document && props.isOpen) {
+        const scrollBarWidth = window.innerWidth - document.body.offsetWidth;
+
+        document.body.style.overflow = "hidden";
+        document.body.style.paddingRight = `${scrollBarWidth}`;
+      }
+
+      if (window && document && !props.isOpen) {
+        document.body.style.overflow = "auto";
+        document.body.style.paddingRight = "0";
+      }
+    }
   });
 
   const styles = createMemo(

@@ -37,11 +37,7 @@ export const Checkbox: Component<CheckboxProps> = (props) => {
   return (
     <Box style={styles()}>
       <Check>
-        <CheckmarkIcon
-          isTextInput={false}
-          isTrackingCheck={true}
-          runAction={props.isComplete}
-        />
+        <CheckmarkIcon runAction={props.isComplete} />
       </Check>
     </Box>
   );

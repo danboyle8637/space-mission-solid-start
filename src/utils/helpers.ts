@@ -19,6 +19,7 @@ export function getErrorMessage(error: unknown) {
 
 export const toggleScrollingOnOverlay = (isOpen: boolean) => {
   if (window && document && isOpen) {
+    console.log("Open");
     const scrollBarWidth = window.innerWidth - document.body.offsetWidth;
 
     document.body.style.overflow = "hidden";
@@ -26,6 +27,7 @@ export const toggleScrollingOnOverlay = (isOpen: boolean) => {
   }
 
   if (window && document && !isOpen) {
+    console.log("Not Open");
     document.body.style.overflow = "auto";
     document.body.style.paddingRight = "0";
   }
