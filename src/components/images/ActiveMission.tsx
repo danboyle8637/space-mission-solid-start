@@ -18,10 +18,16 @@ const MissionImage = styled("div")`
   isolation: isolate;
 `;
 
+const Image = styled("img")`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+`;
+
 export const ActiveMission: Component<ActiveMissionProps> = (props) => {
   return (
     <MissionImage>
-      <img src={props.imageUrl} alt={props.altTag} title={props.titleTag} />
+      <Image src={props.imageUrl} alt={props.altTag} title={props.titleTag} />
     </MissionImage>
   );
 };

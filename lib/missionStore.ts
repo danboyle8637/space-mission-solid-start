@@ -7,7 +7,7 @@ interface MissionStats {
   isGoal3Complete: boolean;
 }
 
-type CompletedMission = 1 | 2 | 3;
+export type CompletedMission = "missionGoal1" | "missionGoal2" | "missionGoal3";
 
 interface ActiveMission {
   missionId: MissionId | null;
@@ -35,21 +35,21 @@ export const [missionStats, setMissionStats] = createSignal<MissionStats>({
 
 export const updateMissionStats = (completedMission: CompletedMission) => {
   switch (completedMission) {
-    case 1: {
+    case "missionGoal1": {
       setMissionStats((prevValue) => ({
         ...prevValue,
         isGoal1Complete: true,
       }));
       break;
     }
-    case 2: {
+    case "missionGoal2": {
       setMissionStats((prevValue) => ({
         ...prevValue,
         isGoal2Complete: true,
       }));
       break;
     }
-    case 3: {
+    case "missionGoal3": {
       setMissionStats((prevValue) => ({
         ...prevValue,
         isGoal3Complete: true,

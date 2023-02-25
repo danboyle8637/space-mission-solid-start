@@ -4,7 +4,7 @@ import { Transition } from "solid-transition-group";
 import { animate } from "motion";
 import type { Component, JSX, JSXElement } from "solid-js";
 
-import { toggleScrollingOnOverlay } from "../utils/helpers";
+// import { toggleScrollingOnOverlay } from "../utils/helpers";
 
 interface TransitionProps {
   isOpen: boolean;
@@ -14,7 +14,8 @@ interface TransitionProps {
 }
 
 const Container = styled("div")`
-  position: var(--container-position);
+  /* position: var(--container-position); */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -51,11 +52,6 @@ export const InstantTransition: Component<TransitionProps> = (props) => {
       ).finished.then(() => done());
     }
   };
-
-  createEffect(() => {
-    console.log(props.isOpen)
-    // toggleScrollingOnOverlay(props.isOpen)
-  });
 
   const styles = createMemo(
     () =>

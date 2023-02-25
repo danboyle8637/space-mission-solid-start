@@ -9,16 +9,10 @@ const Container = styled("header")`
   width: 100%;
 `;
 
-const Logo = styled("div")`
-  width: 90px;
-`;
-
 export const Header: Component = () => {
   return (
     <Container>
-      <Logo>
-        <SpaceMissionLogo />
-      </Logo>
+      <SpaceMissionLogo />
     </Container>
   );
 };

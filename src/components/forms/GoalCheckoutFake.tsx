@@ -3,12 +3,13 @@ import { styled } from "solid-styled-components";
 import type { Component, JSX } from "solid-js";
 
 import { Checkbox } from "./inputComponents/Checkbox";
+import type { CompletedMission } from "../../../lib/missionStore";
 
 interface ButtonProps {
-  name: string;
+  name: CompletedMission;
   label: string;
   isChecked: boolean;
-  handleUpdateMissionStats: (name: string, value: boolean) => void;
+  handleUpdateMissionStats: (name: CompletedMission, value: boolean) => void;
   isDisabled: boolean;
 }
 
@@ -49,12 +50,6 @@ export const GoalCheckboxFake: Component<ButtonProps> = (props) => {
   const styles = createMemo(
     () =>
       ({
-        "--button-background":
-          props.name === "deleteSavedWorkout" && !props.isDisabled
-            ? "var(--additional-pink-1)"
-            : props.name === "unBookmarkSavedWorkout" && props.isDisabled
-            ? "var(--dark-7)"
-            : "var(--additional-purple-2)",
         "--button-cursor": props.isDisabled ? "not-allowed" : "pointer",
       } as JSX.CSSProperties)
   );

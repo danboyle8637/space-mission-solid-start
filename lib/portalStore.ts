@@ -25,3 +25,10 @@ export const closeIsOverlayOpen = () => {
     mission: "mars",
   }));
 };
+
+export const [isImageUploadOpen, setIsImageUploadOpen] =
+  createSignal<boolean>(false);
+
+export const toggleIsImageUploadOpen = () => {
+  setIsImageUploadOpen((prevValue) => !prevValue);
+};

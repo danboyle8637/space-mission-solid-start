@@ -1,3 +1,4 @@
+import { createMemo } from "solid-js";
 import { styled } from "solid-styled-components";
 import type { Component } from "solid-js";
 
@@ -9,9 +10,8 @@ import {
   errorState,
   updateErrorMessage,
 } from "../../../../../lib/networkStore";
-import {} from "../../../../../lib/portalStore";
 import { getErrorMessage } from "../../../../utils/helpers";
-import { MissionId, UserDoc } from "../../../../types";
+import type { MissionId, UserDoc } from "../../../../types";
 import {
   ActivateMissionUserDocBody,
   ActivateMissionStatsDocBody,
@@ -59,6 +59,22 @@ export const StartMission: Component<StartMissionProps> = (props) => {
     setActiveMissionData(activeMission!);
   };
 
+  const buttonLabel = createMemo(() => {
+    if (
+      missionStats().isGoal1Complete &&
+      missionStats().isGoal2Complete &&
+      missionStats().isGoal3Complete
+    ) {
+      return "Filing Completed Missing Breifs";
+    }
+
+    if (user().activeMission === "") {
+      return "Activate Mission";
+    }
+
+    return "You're Out On Mission";
+  });
+
   return (
     <Container>
       <MissionText>Do You Accept This Mission?</MissionText>
@@ -66,9 +82,7 @@ export const StartMission: Component<StartMissionProps> = (props) => {
         handleClick={handleStartMission}
         isDisabled={user().activeMission !== ""}
       >
-        {user().activeMission !== ""
-          ? "You're Out On A Mission"
-          : "Activate Mission"}
+        {buttonLabel()}
       </ActionButton>
     </Container>
   );

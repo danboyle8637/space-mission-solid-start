@@ -5,7 +5,7 @@ import { CardHeader } from "./CardHeader";
 import { Description } from "./Description";
 import { Footer } from "./Footer";
 import { CancelMissionButton } from "../../buttons/CancelMissionButton";
-import { MissionId } from "../../../types";
+import type { MissionId } from "../../../types";
 
 interface DetailsProps {
   isOpen: boolean;

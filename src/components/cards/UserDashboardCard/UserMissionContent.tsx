@@ -1,4 +1,4 @@
-import { onMount, createMemo } from "solid-js";
+import { onMount, createEffect, createMemo } from "solid-js";
 import { styled } from "solid-styled-components";
 import type { Component, JSX } from "solid-js";
 
@@ -55,18 +55,15 @@ export const UserMissionContent: Component = () => {
       : "No Active Mission"
   );
 
-  const styles = createMemo(
-    () =>
-      ({
-        "--label-color": "var(--accent-purple)",
-      } as JSX.CSSProperties)
-  );
+  const styles = {
+    "--label-color": "var(--accent-purple)",
+  } as JSX.CSSProperties;
 
   return (
     <Container>
       <IdentityContainer>
         <Label>Active Mission:</Label>
-        <Label style={styles()}>{missionName}</Label>
+        <Label style={styles}>{missionName}</Label>
       </IdentityContainer>
       {user().activeMission !== "" && activeMissionData().coverImage !== "" ? (
         <ActiveMission

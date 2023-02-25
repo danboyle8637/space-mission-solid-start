@@ -5,13 +5,13 @@ import type { Component } from "solid-js";
 import { CloseIcon } from "../cssDrawings/CloseIcon";
 import { endpoints } from "../../utils/endpoints";
 import { user, updateUser } from "../../../lib/userStore";
-import { MissionId } from "../../types";
 import {
   errorState,
   updateErrorMessage,
   toggleErrorOverlay,
 } from "../../../lib/networkStore";
 import { missionStats, resetMissionStats } from "../../../lib/missionStore";
+import type { MissionId, UserDoc } from "../../types";
 import { getErrorMessage } from "../../utils/helpers";
 
 interface ButtonProps {
@@ -21,7 +21,7 @@ interface ButtonProps {
 const CancelButton = styled("button")`
   position: absolute;
   top: 20px;
-  right: 20px;
+  left: 20px;
   padding: 12px 24px;
   display: grid;
   grid-template-columns: min-content 1fr;
@@ -52,40 +52,14 @@ const CancelButton = styled("button")`
 export const CancelMissionButton: Component<ButtonProps> = (props) => {
   const handleCancelMission = async () => {
     // set loader that says cancelling mission
-    console.log("Set a loading state of some sort");
 
-    const baseUrl =
-      process.env.NODE_ENV === "development"
-        ? process.env.NEXT_PUBLIC_API_DEV_URL
-        : process.env.NEXT_PUBLIC_API_URL;
-    const url = `${baseUrl}/${endpoints.CANCEL_MISSION}`;
-
-    const cancelBody = {
-      missionId: props.missionId,
+    const updatedUser: UserDoc = {
+      ...user(),
+      activeMission: "",
     };
 
-    try {
-      if (user().userId === "") {
-        // Use resource to get user... it will either be available or we'll get the user
-      }
-
-      const cancelRes = await fetch(url, {
-        method: "POST",
-        headers: {
-          "should-update-user-cache": "true",
-          userId: user().userId,
-        },
-        body: JSON.stringify(cancelBody),
-      });
-
-      const cancelData = await cancelRes.json();
-      const userDoc = cancelData.userDoc;
-      updateUser(userDoc);
-      resetMissionStats();
-    } catch (error) {
-      updateErrorMessage("Cancel Mission Call", getErrorMessage(error));
-      toggleErrorOverlay();
-    }
+    updateUser(updatedUser);
+    resetMissionStats();
   };
 
   return (

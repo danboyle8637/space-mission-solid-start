@@ -1,20 +1,22 @@
-import { createSignal, createMemo } from "solid-js";
+import { createEffect, createSignal, createMemo } from "solid-js";
 import { Portal } from "solid-js/web";
 import { styled } from "solid-styled-components";
-import type { Component } from "solid-js";
+import type { Component, JSX } from "solid-js";
 
 import { MissionBanner } from "./MissionBanner";
 import { MissionDescription } from "./Description";
 import { Footer } from "./Footer";
 import { MissionDetailsModal } from "../../overlays/MissionDetailsModal";
 import { MissionDetailsCard } from "../MissionDetailsCard";
-import { user } from "../../../../lib/userStore";
+import { user, updateUser } from "../../../../lib/userStore";
+import { missionStats, resetMissionStats } from "../../../../lib/missionStore";
 import {
   isMissionOverlayOpen,
   toggleIsMissionOverlayOpen,
   closeIsOverlayOpen,
 } from "../../../../lib/portalStore";
-import { MissionId } from "../../../types";
+import { toggleScrollingOnOverlay } from "../../../utils/helpers";
+import type { MissionId, UserDoc } from "../../../types";
 
 interface CardProps {
   missionId: MissionId;
@@ -38,8 +40,11 @@ const CardContainer = styled.button`
   box-shadow: 0 0 0 6px hsla(0, 0%, 0%, 0.4);
   cursor: pointer;
   overflow: hidden;
+  opacity: var(--card-opacity);
+  pointer-events: var(--card-pointer-events);
   transform: translateY(0);
   transition: transform, box-shadow, 300ms ease-in-out;
+
   &:focus {
     box-shadow: 0 0 0 3px var(--base-blue), 0 0 0 6px var(--accent-pink);
     transform: translateY(-8px);
@@ -59,20 +64,66 @@ export const MissionCard: Component<CardProps> = (props) => {
 
   const isActive = createMemo(() => user().activeMission === props.missionId);
 
-  const isOpen = createMemo(() => isMissionOverlayOpen().isOpen && isMissionOverlayOpen().mission === props.missionId)
+  const isOpen = createMemo(
+    () =>
+      isMissionOverlayOpen().isOpen &&
+      isMissionOverlayOpen().mission === props.missionId
+  );
 
   const openCardContainer = () => {
     toggleIsMissionOverlayOpen(props.missionId);
   };
 
+  createEffect(() => {
+    toggleScrollingOnOverlay(isOpen());
+  });
+
+  createMemo(() => {
+    if (user().activeMission === props.missionId) {
+      if (
+        missionStats().isGoal1Complete &&
+        missionStats().isGoal2Complete &&
+        missionStats().isGoal3Complete
+      ) {
+        const completedMission = props.missionId;
+        const updatedUser: UserDoc = {
+          ...user(),
+          activeMission: "",
+          finishedMissions: [...user().finishedMissions, completedMission],
+        };
+
+        updateUser(updatedUser);
+
+        setTimeout(() => {
+          resetMissionStats();
+          toggleIsMissionOverlayOpen(props.missionId);
+        }, 1500);
+      }
+    }
+  });
+
+  const isMissionComplete = createMemo(() => {
+    return user().finishedMissions.includes(props.missionId);
+  });
+
+  const styles = createMemo(
+    () =>
+      ({
+        "--card-opacity": isMissionComplete() ? 0.3 : 1,
+        "--card-pointer-events": isMissionComplete() ? "none" : "auto",
+      } as JSX.CSSProperties)
+  );
+
   return (
     <>
       <CardContainer
+        style={styles()}
         type="button"
         aria-label="Mission button"
         onMouseOver={toggleIsHovering}
         onMouseLeave={toggleIsHovering}
         onClick={openCardContainer}
+        disabled={isMissionComplete()}
       >
         <MissionBanner
           imageUrl={props.coverImage}
@@ -83,7 +134,11 @@ export const MissionCard: Component<CardProps> = (props) => {
           headline={props.headline}
           description={props.description}
         />
-        <Footer isActive={isActive()} isHovering={isHovering()} />
+        <Footer
+          isActive={isActive()}
+          isHovering={isHovering()}
+          isMissionComplete={isMissionComplete()}
+        />
       </CardContainer>
       <Portal>
         <MissionDetailsModal

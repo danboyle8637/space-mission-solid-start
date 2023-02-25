@@ -1,4 +1,4 @@
-import { createMemo } from "solid-js";
+import { createEffect, createMemo } from "solid-js";
 import { styled } from "solid-styled-components";
 import type { Component, JSX } from "solid-js";
 

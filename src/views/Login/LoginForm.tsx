@@ -41,7 +41,6 @@ export const LoginForm: Component = () => {
         avatar: "",
         emailAddress: email as string,
         finishedMissions: [],
-        missionStatsDocId: "",
       };
 
       updateUser(user);

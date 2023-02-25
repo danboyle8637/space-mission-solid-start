@@ -1,4 +1,4 @@
-import { animate, spring, timeline } from "motion";
+import { animate, spring, timeline, MotionKeyframesDefinition } from "motion";
 
 const draw = (progress: number) => ({
   // This property makes the line "draw" in when animated
@@ -9,6 +9,14 @@ const draw = (progress: number) => ({
   // partially visible even when progress is at 0
   visibility: "visible",
 });
+
+const drawCheck = (progress: number): MotionKeyframesDefinition => {
+  return {
+    strokeDashoffset: 1 - progress * -1,
+    visibility: "visible",
+    opacity: progress === 0 ? 0 : 1,
+  };
+};
 
 export const drawCircleGraph = (
   path: SVGPathElement,
@@ -31,9 +39,9 @@ export const drawCircleGraph = (
 };
 
 export const checkmarkOn = (checkPath: SVGPathElement, kill?: boolean) => {
-  const check = animate(checkPath, draw(1), {
-    duration: 0.4,
-    easing: spring(),
+  const check = animate(checkPath, drawCheck(1), {
+    duration: 0.3,
+    easing: "ease-in-out",
   });
 
   if (kill) {
@@ -44,9 +52,9 @@ export const checkmarkOn = (checkPath: SVGPathElement, kill?: boolean) => {
 };
 
 export const checkmarkOff = (checkPath: SVGPathElement, kill?: boolean) => {
-  const check = animate(checkPath, draw(0), {
-    duration: 0.4,
-    easing: spring(),
+  const check = animate(checkPath, drawCheck(0), {
+    duration: 0.3,
+    easing: "ease-in-out",
   });
 
   if (kill) {
@@ -116,7 +124,7 @@ export const modalEnter = (modal: HTMLDialogElement) => {
   animate(
     modal,
     {
-      transform: ["translate(-50%, -60%)", "translate(-50%, -50%)"],
+      transform: ["translate(-50%, -56%)", "translate(-50%, -50%)"],
       opacity: [0, 1],
     },
     { duration: 0.3 }
@@ -127,7 +135,7 @@ export const modalExit = (modal: HTMLDialogElement) => {
   animate(
     modal,
     {
-      transform: ["translate(-50%, -50%)", "translate(-50%, -60%)"],
+      transform: ["translate(-50%, -50%)", "translate(-50%, -56%)"],
       opacity: [1, 0],
     },
     { duration: 0.3 }

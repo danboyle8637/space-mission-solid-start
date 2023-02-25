@@ -9,6 +9,7 @@ import { missionStats } from "../../../../lib/missionStore";
 interface FooterProps {
   isActive: boolean;
   isHovering: boolean;
+  isMissionComplete: boolean;
 }
 
 const Container = styled("div")`
@@ -38,6 +39,8 @@ export const Footer: Component<FooterProps> = (props) => {
       ({
         "--button-background-color": props.isActive
           ? "var(--accent-pink)"
+          : props.isMissionComplete
+          ? "var(--accent-purple)"
           : "var(--accent-teal)",
       } as JSX.CSSProperties)
   );
@@ -57,7 +60,11 @@ export const Footer: Component<FooterProps> = (props) => {
       </DotsContainer>
       <ButtonContainer style={styles()}>
         <DummyButton isHovering={props.isHovering}>
-          {props.isActive ? "Update Mission" : "Start Mission"}
+          {props.isActive
+            ? "Update Mission"
+            : props.isMissionComplete
+            ? "Completed"
+            : "Start Mission"}
         </DummyButton>
       </ButtonContainer>
     </Container>

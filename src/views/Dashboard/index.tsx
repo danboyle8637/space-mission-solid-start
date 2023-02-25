@@ -13,7 +13,7 @@ interface DashbordViewProps {
 
 const ViewContainer = styled("div")`
   position: relative;
-  padding: 40px 12px 80px 12px;
+  padding: 40px 12px 200px 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,6 +28,7 @@ const HeaderContainer = styled("div")`
   grid-template-columns: 1fr;
   grid-auto-rows: min-content;
   gap: 40px;
+  justify-items: center;
 `;
 
 const BlueGalaxy = styled("div")`

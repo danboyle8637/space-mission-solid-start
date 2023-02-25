@@ -44,7 +44,8 @@ export const CheckmarkIcon: Component<CheckmarkIconProps> = (props) => {
         stroke-width="34"
         stroke-dashoffset="1"
         stroke-dasharray="1"
-        path-length="1"
+        pathLength="1"
+        opacity="0"
         visibility="hidden"
         d="M147.85 17l-93.52 93.53L17 73.2"
       />

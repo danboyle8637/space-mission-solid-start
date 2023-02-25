@@ -9,7 +9,8 @@ import {
   updateMissionStats,
 } from "../../../../../lib/missionStore";
 import { endpoints } from "../../../../utils/endpoints";
-import { MissionId } from "../../../../types";
+import type { MissionId } from "../../../../types";
+import type { CompletedMission } from "../../../../../lib/missionStore";
 
 interface GoalsFormProps {
   missionId: MissionId;
@@ -27,15 +28,12 @@ export const MissionGoalsForm: Component<GoalsFormProps> = (props) => {
   // TODO - Read about data fetching in Solid because if the user is not in memory. The uesr needs to be retreved... not sure the best way to do this yet
   // Something here
 
-  const handleUpdateMissionStats = async (name: string, value: boolean) => {
-    console.log("Update the mission stats doc");
+  const handleUpdateMissionStats = async (
+    name: CompletedMission,
+    value: boolean
+  ) => {
+    updateMissionStats(name);
   };
-
-  createEffect(() => {
-    console.log(missionStats().isGoal1Complete);
-    console.log(missionStats().isGoal2Complete);
-    console.log(missionStats().isGoal3Complete);
-  });
 
   return (
     <GoalForm>
