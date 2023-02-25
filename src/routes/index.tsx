@@ -1,16 +1,21 @@
+import { styled } from "solid-styled-components";
 import { Title } from "solid-start";
+
+import { LoginView } from "../views/Login";
+
+const Main = styled("main")`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+`;
 
 export default function Home() {
   return (
-    <main>
-      <Title>Hello Solid Space Mission</Title>
-      <p>
-        Visit{" "}
-        <a href="https://start.solidjs.com" target="_blank">
-          start.solidjs.com
-        </a>{" "}
-        to learn how to build SolidStart apps.
-      </p>
-    </main>
+    <Main>
+      <Title>Space Mission Solid Start and Cloudflare</Title>
+      <LoginView />
+    </Main>
   );
 }
